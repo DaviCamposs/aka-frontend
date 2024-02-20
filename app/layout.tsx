@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
+
 import { MantineProvider, createTheme } from "@mantine/core";
+import { Notifications } from "@mantine/notifications";
+import { AuthProvider } from "./providers/authContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +25,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <AuthProvider>
+            <Notifications />
+            {children}
+          </AuthProvider>
+        </MantineProvider>
       </body>
     </html>
   );
