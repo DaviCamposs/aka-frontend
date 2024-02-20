@@ -12,6 +12,7 @@ type AuthProps = {
   user: IUserToken | null;
   isLogged: boolean;
   login: (email: string, password: string) => Promise<IUserToken>;
+  register: (name: string, email: string, password: string) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthProps>({} as any);
@@ -24,14 +25,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     email: string,
     password: string
   ): Promise<IUserToken> => {
-    const result = await axios.post(BASE_URL + '/users/login', {
-      email,
-      password,
-    }, {
-      validateStatus: function (status) {
-        return status === 200 || status === 401 || status === 400;
+    const result = await axios.post(
+      BASE_URL + "/users/login",
+      {
+        email,
+        password,
+      },
+      {
+        validateStatus: function (status) {
+          return status === 200 || status === 401 || status === 400;
+        },
       }
-    });
+    );
 
     if (result.status === 200) {
       const userToken: IUserToken = {
@@ -49,10 +54,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } else if (result.status === 400) {
       throw new BadRequestError(result.data);
     } else if (result.status === 401) {
-      throw new UnauthorizedError(result.data)
-    } 
-    
-    else throw new Error("Server Error, Try again!");
+      throw new UnauthorizedError(result.data);
+    } else throw new Error("Server Error, Try again!");
+  };
+
+  const register = async (
+    name: string,
+    email: string,
+    password: string
+  ): Promise<void> => {
+    const result = await axios.post(
+      BASE_URL + "/users",
+      {
+        email,
+        password,
+        name
+      },
+      {
+        validateStatus: function (status) {
+          return status === 200 || status === 201 || status === 401 || status === 400;
+        },
+      }
+    );
+
+    if (result.status === 400) {
+      throw new BadRequestError(result.data);
+    }
   };
 
   return (
@@ -60,7 +87,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         login,
         user,
-        isLogged
+        isLogged,
+        register,
       }}
     >
       {children}
