@@ -2,13 +2,14 @@
 
 import { Container, Flex, Grid } from "@mantine/core";
 import { useContext, useEffect, useState } from "react";
-import { TableExchange } from "./components/table";
+import { TableExchange } from "../components/table";
 import { IExchangeHistoryTableRow } from "@/app/providers/types/exchangeHistory";
 import { ExchangeContext } from "@/app/providers/exchangeContext";
-import { ComboboxExchange } from "./components/combobox";
-import CalendarExchange from "./components/calendar";
+import { ComboboxExchange } from "../components/combobox";
+import CalendarExchange from "../components/calendar";
 
-export default function DayPage() {
+
+export default function HistoryPage() {
   const [exchangeHistory, setExchangeHistory] = useState<
     IExchangeHistoryTableRow[]
   >([]);
