@@ -4,12 +4,24 @@ import { ActionIcon, Container, Flex } from "@mantine/core";
 import { IconLogout } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useContext } from "react";
+import { AuthContext } from "../providers/authContext";
+import { useRouter } from "next/navigation";
 
 export default function HomeLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { logout } = useContext(AuthContext);
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+
+    router.push("/login");
+  };
+
   return (
     <>
       <Container
@@ -30,20 +42,32 @@ export default function HomeLayout({
               style={{ marginRight: 20, cursor: "pointer" }}
             />
 
-            <Link href="/home" style={  { textDecoration: 'none' }} >
+            <Link href="/home" style={{ textDecoration: "none" }}>
               <span
                 style={{ marginRight: 20, color: "#333", cursor: "pointer" }}
-              >Home</span>
+              >
+                Home
+              </span>
             </Link>
 
-            <Link href="/home/day" style={  { textDecoration: 'none' }} >
+            <Link href="/home/daily" style={{ textDecoration: "none" }}>
               <span
                 style={{ marginRight: 20, color: "#333", cursor: "pointer" }}
-              >History</span>
+              >
+                Daily
+              </span>
+            </Link>
+
+            <Link href="/home/history" style={{ textDecoration: "none" }}>
+              <span
+                style={{ marginRight: 20, color: "#333", cursor: "pointer" }}
+              >
+                History
+              </span>
             </Link>
           </div>
           <div>
-            <ActionIcon variant="transparent">
+            <ActionIcon onClick={handleLogout} variant="transparent">
               <IconLogout
                 color="black"
                 style={{ width: "100%", height: "90%" }}
