@@ -24,3 +24,15 @@ export interface IExchangeHistoryTableDTO {
     title: string
     data: IExchangeHistoryTableRow[]
 }
+
+export interface IExchangeDailyRecord {
+    hour: string
+    average: number
+    min: number,
+    max: number
+}
+
+export interface IExchangeDailyDTO {
+    title: string
+    data: IExchangeDailyRecord[]
+}

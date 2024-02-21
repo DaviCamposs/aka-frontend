@@ -13,6 +13,7 @@ type AuthProps = {
   isLogged: boolean;
   login: (email: string, password: string) => Promise<IUserToken>;
   register: (name: string, email: string, password: string) => Promise<void>;
+  logout: () => void
 };
 
 export const AuthContext = createContext<AuthProps>({} as any);
@@ -82,6 +83,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const logout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    setIsLogged(false);
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -89,6 +96,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         user,
         isLogged,
         register,
+        logout
       }}
     >
       {children}
