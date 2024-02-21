@@ -12,7 +12,7 @@ const BASE_URL = process.env.BASE_URL ?? "http://localhost:8080";
 
 type ExchangeProps = {
   fetchSummary: () => Promise<IExchangeSummary | undefined>;
-  fetchHistory: (acronym: string) => Promise<IExchangeHistoryTableRow[]>;
+  fetchHistory: (acronym: string, date: Date) => Promise<IExchangeHistoryTableRow[]>;
 };
 
 export const ExchangeContext = createContext<ExchangeProps>({} as any);
@@ -44,12 +44,12 @@ export function ExchangeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const fetchHistory = async (
-    acronym: string
+    acronym: string,
+    date: Date
   ): Promise<IExchangeHistoryTableRow[]> => {
-    const currentDate = new Date();
-    const day = String(currentDate.getDate()).padStart(2, "0");
-    const month = String(currentDate.getMonth() + 1).padStart(2, "0");
-    const year = currentDate.getFullYear();
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
 
     const result = await axios.get(BASE_URL + "/exchange/history", {
       params: {
