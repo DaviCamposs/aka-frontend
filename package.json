@@ -16,6 +16,7 @@
     "@mantine/notifications": "^7.5.3",
     "@tabler/icons-react": "^2.47.0",
     "axios": "^1.6.7",
+    "chart.js": "^4.4.0",
     "dayjs": "^1.11.10",
     "next": "14.1.0",
     "react": "^18",
