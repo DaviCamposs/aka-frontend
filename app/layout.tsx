@@ -7,6 +7,7 @@ import "@mantine/notifications/styles.css";
 import { MantineProvider, createTheme } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
 import { AuthProvider } from "./providers/authContext";
+import { ExchangeProvider } from "./providers/exchangeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +28,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <MantineProvider theme={theme}>
           <AuthProvider>
-            <Notifications />
-            {children}
+            <ExchangeProvider>
+              <Notifications />
+              {children}
+            </ExchangeProvider>
           </AuthProvider>
         </MantineProvider>
       </body>
