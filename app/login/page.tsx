@@ -13,17 +13,21 @@ import { AuthContext } from "../providers/authContext";
 import { BadRequestError } from "../providers/errors/bad-request.error";
 import { notifications } from "@mantine/notifications";
 import { UnauthorizedError } from "../providers/errors/unauthorized.error";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { login } = useContext(AuthContext);
+  const router = useRouter()
 
   const handleLogin = async (e: any) => {
     e.preventDefault();
     try {
       await login(email, password);
+
+      router.push('/home')
     } catch (error) {
       console.log('error section')
       console.log(error)
