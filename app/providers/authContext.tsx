@@ -6,7 +6,7 @@ import { IUserToken } from "./types/user-token";
 import { BadRequestError } from "./errors/bad-request.error";
 import { UnauthorizedError } from "./errors/unauthorized.error";
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = process.env.BASE_URL ?? "http://localhost:8080";
 
 type AuthProps = {
   user: IUserToken | null;
